@@ -7,7 +7,7 @@ import javax.persistence.*;
  * @Date : 05/10/20, Sun
  */
 @Entity
-public class Notes {
+public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
