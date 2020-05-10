@@ -1,6 +1,8 @@
 package com.giovannottix.recipe.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author: Giovanni Esposito.
@@ -19,14 +21,16 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
-
     private String directions;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
     private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Notes notes;
+    private Note note;
 
     public Long getId() {
         return id;
@@ -100,11 +104,11 @@ public class Recipe {
         this.image = image;
     }
 
-    public Notes getNotes() {
-        return notes;
+    public Note getNote() {
+        return note;
     }
 
-    public void setNotes(Notes notes) {
-        this.notes = notes;
+    public void setNote(Note note) {
+        this.note = note;
     }
 }
