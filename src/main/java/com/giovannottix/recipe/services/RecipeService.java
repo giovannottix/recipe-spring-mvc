@@ -1,0 +1,15 @@
+package com.giovannottix.recipe.services;
+
+import com.giovannottix.recipe.domain.Recipe;
+
+import java.util.Set;
+
+/**
+ * @author: Giovanni Esposito.
+ * @Date : 05/10/20, Sun
+ */
+public interface RecipeService {
+
+    Set<Recipe> getRecipes();
+
+}
