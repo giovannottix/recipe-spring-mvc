@@ -2,7 +2,6 @@ package com.giovannottix.recipe.repositories;
 
 import com.giovannottix.recipe.domain.Recipe;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  * @author: Giovanni Esposito.
