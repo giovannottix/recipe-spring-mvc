@@ -1,6 +1,7 @@
 package com.giovannottix.recipe.controllers;
 
 import com.giovannottix.recipe.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author: Giovanni Esposito.
  * @Date : 05/07/20, Thu
  */
+@Slf4j
 @Controller
 public class IndexController {
 
@@ -20,8 +22,9 @@ public class IndexController {
 
     @RequestMapping({"", "/", "/index"})
     public String getIndex(Model model) {
-        model.addAttribute("recipes", recipeService.getRecipes());
+        log.debug("getIndex");
 
+        model.addAttribute("recipes", recipeService.getRecipes());
         return "index";
     }
 

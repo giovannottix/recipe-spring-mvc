@@ -4,9 +4,11 @@ import com.giovannottix.recipe.domain.*;
 import com.giovannottix.recipe.repositories.CategoryRepository;
 import com.giovannottix.recipe.repositories.RecipeRepository;
 import com.giovannottix.recipe.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.Optional;
  * @author: Giovanni Esposito.
  * @Date : 05/10/20, Sun
  */
+@Slf4j
 @Controller
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -33,12 +36,15 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        log.debug("Ready to save recipes");
         this.recipeRepository.saveAll(getRecipes());
+        log.debug("Recipes saved");
     }
 
     private List<Recipe> getRecipes() {
-
+        log.debug("Preparing recipes");
         List<Recipe> recipes = new ArrayList<>(2);
 
         //get UOMs
