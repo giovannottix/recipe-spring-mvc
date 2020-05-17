@@ -12,6 +12,9 @@ import java.util.Set;
  */
 @Data
 @EqualsAndHashCode(exclude = {"recipes"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Category {
 

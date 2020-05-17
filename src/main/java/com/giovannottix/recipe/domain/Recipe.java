@@ -1,7 +1,6 @@
 package com.giovannottix.recipe.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,6 +12,9 @@ import java.util.Set;
  */
 @Data
 @EqualsAndHashCode(exclude = {"ingredients", "note"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Recipe {
 
