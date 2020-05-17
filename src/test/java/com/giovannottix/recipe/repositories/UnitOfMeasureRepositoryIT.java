@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-class UnitOfMeasureRepositoryIntegrationTest {
+class UnitOfMeasureRepositoryIT {
 
     @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
