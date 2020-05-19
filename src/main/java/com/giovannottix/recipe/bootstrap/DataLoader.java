@@ -160,7 +160,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         guacRecipe.getCategories().add(mexicanCategory);
 
         guacRecipe.setUrl("http://www.simplyrecipes.com/recipes/perfect_guacamole/");
-        guacRecipe.setServings(4);
+        guacRecipe.setServing(4);
         guacRecipe.setSource("Simply Recipes");
 
         //add to return list
@@ -241,7 +241,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         tacosRecipe.getCategories().add(mexicanCategory);
 
         tacosRecipe.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
-        tacosRecipe.setServings(4);
+        tacosRecipe.setServing(4);
         tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);
