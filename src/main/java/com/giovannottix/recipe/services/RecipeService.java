@@ -12,4 +12,5 @@ public interface RecipeService {
 
     Set<Recipe> getRecipes();
 
+    Recipe getRecipesById(Long id);
 }
