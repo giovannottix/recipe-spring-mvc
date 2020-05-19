@@ -1,6 +1,5 @@
 [![CircleCI](https://circleci.com/gh/giovannottix/recipe-spring-mvc.svg?style=svg)](https://circleci.com/gh/giovannottix/recipe-spring-mvc)
-
-#Spring Framework Recipes example 
+# Spring Framework Recipes example 
 
 I have learned so far with this project:
 
