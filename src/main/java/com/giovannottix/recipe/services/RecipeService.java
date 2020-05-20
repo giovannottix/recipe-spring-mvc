@@ -1,5 +1,6 @@
 package com.giovannottix.recipe.services;
 
+import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.domain.Recipe;
 
 import java.util.Set;
@@ -10,7 +11,9 @@ import java.util.Set;
  */
 public interface RecipeService {
 
-    Set<Recipe> getRecipes();
+    Set<RecipeCommand> getRecipes();
 
-    Recipe getRecipesById(Long id);
+    RecipeCommand getRecipesById(Long id);
+
+    RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
 }

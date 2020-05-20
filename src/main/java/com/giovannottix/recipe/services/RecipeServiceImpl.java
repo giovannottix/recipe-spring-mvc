@@ -1,12 +1,18 @@
 package com.giovannottix.recipe.services;
 
+import com.giovannottix.recipe.commands.RecipeCommand;
+import com.giovannottix.recipe.converters.RecipeCommandToRecipe;
+import com.giovannottix.recipe.converters.RecipeToRecipeCommand;
 import com.giovannottix.recipe.domain.Recipe;
 import com.giovannottix.recipe.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * @author: Giovanni Esposito.
@@ -14,24 +20,55 @@ import java.util.Set;
  */
 @Slf4j
 @Service
+@Transactional
 public class RecipeServiceImpl implements RecipeService{
 
     private final RecipeRepository recipeRepository;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
+
+    public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             RecipeCommandToRecipe recipeCommandToRecipe,
+                             RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
-    public Set<Recipe> getRecipes() {
+    public Set<RecipeCommand> getRecipes() {
         log.debug("Get recipes method in service");
-        Set<Recipe> recipes = new HashSet<>();
-        recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
-        return recipes;
+        return getRecipesCommand(recipeRepository.findAll());
+    }
+
+    private Set<RecipeCommand> getRecipesCommand(Iterable<Recipe> recipes) {
+        Set<RecipeCommand> recipeCommands = new HashSet<>();
+
+        if(recipes != null){
+            recipeCommands =
+                    StreamSupport.stream(recipes.spliterator(), false)
+                            .map(recipe -> recipeToRecipeCommand.convert(recipe))
+                            .collect(Collectors.toSet());
+        }
+
+        return recipeCommands;
     }
 
     @Override
-    public Recipe getRecipesById(Long id) {
-        return recipeRepository.findById(id).orElse(null);
+    public RecipeCommand getRecipesById(Long id) {
+        return recipeToRecipeCommand
+                .convert(recipeRepository.findById(id).orElse(null));
+    }
+
+    @Override
+    public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+        final Recipe detachRecipe =
+                recipeCommandToRecipe.convert(recipeCommand);
+
+        final Recipe savedRecipe = recipeRepository.save(detachRecipe);
+        log.debug("Saved Recipe with ID: - "+savedRecipe.getId());
+
+        return recipeToRecipeCommand.convert(savedRecipe);
     }
 }

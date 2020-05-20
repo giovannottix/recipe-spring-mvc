@@ -1,11 +1,19 @@
 package com.giovannottix.recipe.services;
 
+import com.giovannottix.recipe.commands.RecipeCommand;
+import com.giovannottix.recipe.converters.RecipeCommandToRecipe;
+import com.giovannottix.recipe.converters.RecipeToRecipeCommand;
 import com.giovannottix.recipe.domain.Recipe;
 import com.giovannottix.recipe.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -25,24 +33,45 @@ class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
     Set<Recipe> recipeData;
+
+    Recipe recipeFix;
+    RecipeCommand recipeCommand;
+
+    static final Long ID = 1L;
+    static final String NEW_DESCRIPTION = "New Description";
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository,
+                recipeCommandToRecipe, recipeToRecipeCommand);
 
         Recipe recipe = new Recipe();
         recipeData = new HashSet<>();
         recipeData.add(recipe);
+
+        recipeFix = Recipe.builder().id(ID).build();
+        recipeCommand = RecipeCommand.builder().id(ID).build();
+
     }
 
     @Test
     void getRecipesTest() throws Exception {
-        when(recipeRepository.findAll()).thenReturn(recipeData);
+        when(recipeRepository.findAll())
+                .thenReturn(recipeData);
 
-        Set<Recipe> recipes = recipeService.getRecipes();
+        when(recipeToRecipeCommand.convert(any(Recipe.class)))
+                .thenReturn(recipeCommand);
+
+        Set<RecipeCommand> recipes = recipeService.getRecipes();
 
         assertEquals(1, recipes.size());
         verify(recipeRepository, times(1)).findAll();
@@ -50,28 +79,27 @@ class RecipeServiceImplTest {
 
     @Test
     public void getRecipeByIdFoundTest() throws Exception {
-        Long id = 1L;
-        Recipe recipeFix = Recipe.builder().id(id).build();
 
         when(recipeRepository.findById(anyLong()))
                 .thenReturn(Optional.of(recipeFix));
 
-        Recipe recipe = recipeService.getRecipesById(id);
+        when(recipeToRecipeCommand.convert(any(Recipe.class)))
+                .thenReturn(recipeCommand);
+
+        RecipeCommand recipe = recipeService.getRecipesById(ID);
 
         assertNotNull(recipe);
-        assertEquals(id, recipe.getId());
+        assertEquals(ID, recipe.getId());
 
         verify(recipeRepository, times(1)).findById(anyLong());
     }
 
     @Test
     public void getRecipeByIdNotFoundTest() throws Exception {
-        Long id = 1L;
-
         when(recipeRepository.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
-        Recipe recipe = recipeService.getRecipesById(id);
+        RecipeCommand recipe = recipeService.getRecipesById(ID);
 
         assertNull(recipe);
 

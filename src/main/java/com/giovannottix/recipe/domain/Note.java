@@ -11,6 +11,9 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Note {
 
     @Id

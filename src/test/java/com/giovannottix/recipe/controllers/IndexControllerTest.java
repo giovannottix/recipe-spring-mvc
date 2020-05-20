@@ -1,5 +1,6 @@
 package com.giovannottix.recipe.controllers;
 
+import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.domain.Recipe;
 import com.giovannottix.recipe.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,9 +62,9 @@ class IndexControllerTest {
     void getIndex() {
 
         //given
-        Set<Recipe> recipes = new HashSet<>();
-        recipes.add(Recipe.builder().id(1L).build());
-        recipes.add(Recipe.builder().id(2L).build());
+        Set<RecipeCommand> recipes = new HashSet<>();
+        recipes.add(RecipeCommand.builder().id(1L).build());
+        recipes.add(RecipeCommand.builder().id(2L).build());
 
         when(recipeService.getRecipes()).thenReturn(recipes);
 
