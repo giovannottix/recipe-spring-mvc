@@ -1,24 +1,19 @@
 package com.giovannottix.recipe.controllers;
 
-import com.giovannottix.recipe.domain.Recipe;
+import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
-import sun.security.acl.WorldGroupImpl;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -45,7 +40,7 @@ public class RecipeControllerTest {
 
     @Test
     public void getRecipeDetailTest() throws Exception {
-        Recipe recipe = Recipe.builder().id(1L).build();
+        RecipeCommand recipe = RecipeCommand.builder().id(1L).build();
 
         when(recipeService.getRecipesById(anyLong())).thenReturn(recipe);
 

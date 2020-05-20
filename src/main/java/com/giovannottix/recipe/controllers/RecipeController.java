@@ -1,5 +1,6 @@
 package com.giovannottix.recipe.controllers;
 
+import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.domain.Recipe;
 import com.giovannottix.recipe.services.RecipeService;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class RecipeController {
 
     @RequestMapping("/recipe/show/{id}")
     public String getRecipeDetail(@PathVariable String id, Model model) {
-        Recipe recipe = recipeService.getRecipesById(Long.parseLong(id));
+        RecipeCommand recipe = recipeService.getRecipesById(Long.parseLong(id));
 
         model.addAttribute("recipe", recipe);
 

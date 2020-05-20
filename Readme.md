@@ -15,3 +15,4 @@ I have learned so far with this project:
 - Maven Failsafe plugin
 - Continuous Integration with Circle CI
 - WebJars
+- Command Object and Type Conversions
