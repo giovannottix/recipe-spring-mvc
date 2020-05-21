@@ -10,9 +10,9 @@ I have learned so far with this project:
 - Spring Data JPA
 - Database initialization
 - Project Lombok
-- JUnit5
-- Spring Integration Test
-- Maven Failsafe plugin
+- Unit Testing, JUnit5, Mockito 
+- Spring Integration Test, maven-failsafe-plugin, MockMVC, DataJpaTest,
+ SpringBootTest
 - Continuous Integration with Circle CI
 - WebJars
 - Command objects and converters
