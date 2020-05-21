@@ -5,8 +5,7 @@ import com.giovannottix.recipe.domain.Recipe;
 import com.giovannottix.recipe.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: Giovanni Esposito.
@@ -21,12 +20,29 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping("/recipe/show/{id}")
+    @RequestMapping("recipe/show/{id}")
     public String getRecipeDetail(@PathVariable String id, Model model) {
         RecipeCommand recipe = recipeService.getRecipesById(Long.parseLong(id));
 
         model.addAttribute("recipe", recipe);
 
         return "recipe/show";
+    }
+
+    @RequestMapping("recipe/new")
+    public String newRecipe(Model model) {
+
+        model.addAttribute("recipe", new RecipeCommand());
+
+        return "recipe/recipeform";
+    }
+
+    @PostMapping("recipe")
+    public String saveOrUpdateRecipe(@ModelAttribute RecipeCommand recipeCommand) {
+
+        RecipeCommand savedRecipe =
+                recipeService.saveRecipeCommand(recipeCommand);
+
+        return "redirect:/recipe/show/" + savedRecipe.getId();
     }
 }
