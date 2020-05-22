@@ -51,6 +51,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
                 .url(source.getUrl())
                 .directions(source.getDirections())
                 .difficulty(source.getDifficulty())
+                .image(source.getImage())
                 .note(notesCommandToNotes.convert(source.getNote()))
                 .categories(getCategoriesFromCategoriesCommand(source.getCategories()))
                 .ingredients(getIngredientsFromIngredientsCommand(source.getIngredients()))
