@@ -16,3 +16,6 @@ I have learned so far with this project:
 - Continuous Integration with Circle CI
 - WebJars
 - Command objects and converters
+- CRUD Operations
+- Thymeleaf and Enums
+- Upload images with Spring MVC
