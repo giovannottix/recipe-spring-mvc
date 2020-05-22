@@ -8,6 +8,7 @@ import com.giovannottix.recipe.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -104,5 +105,33 @@ class RecipeServiceImplTest {
         assertNull(recipe);
 
         verify(recipeRepository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    public void deleteRecipeByIdNull() throws Exception {
+        //Given
+        Long idToDelete = null;
+
+        //When
+        recipeService.deleteRecipeById(idToDelete);
+
+        //Then
+        verifyNoInteractions(recipeRepository);
+    }
+
+    @Test
+    public void deleteRecipeById() throws Exception {
+        //Given
+        Long idToDelete = 2L;
+
+        //When
+        recipeService.deleteRecipeById(idToDelete);
+
+        //Then
+        ArgumentCaptor<Long> argumentCaptor =
+                ArgumentCaptor.forClass(Long.class);
+
+        verify(recipeRepository, times(1))
+                .deleteById(argumentCaptor.capture());
     }
 }
