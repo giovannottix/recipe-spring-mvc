@@ -31,6 +31,8 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
         return IngredientCommand.builder().id(source.getId())
                 .description(source.getDescription())
                 .amount(source.getAmount())
+                .recipeId(source.getRecipe() != null ?
+                        source.getRecipe().getId() : null)
                 .unitOfMeasure(uomCommandConverter.convert(source.getUnitOfMeasure()))
                 .build();
     }
