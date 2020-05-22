@@ -12,10 +12,10 @@ I have learned so far with this project:
 - Project Lombok
 - Unit Testing, JUnit5, Mockito 
 - Spring Integration Test, maven-failsafe-plugin, MockMVC, DataJpaTest,
- SpringBootTest
+ SpringBootTest, MockMultipartFile
 - Continuous Integration with Circle CI
 - WebJars
 - Command objects and converters
 - CRUD Operations
 - Thymeleaf and Enums
-- Upload images with Spring MVC
+- Working with images and Spring MVC
