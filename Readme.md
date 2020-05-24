@@ -23,3 +23,6 @@ I have learned so far with this project:
 - Use @ResponseStatus
 - Use @ExceptionHandler
 - Use @ControllerAdvice
+- Add validation to Command Objects
+- Validate controller method parameters with @Valid
+- Use BindingResult to get validation errors
