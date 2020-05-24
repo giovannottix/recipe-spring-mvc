@@ -22,3 +22,4 @@ I have learned so far with this project:
 - Create custom Exception 
 - Use @ResponseStatus
 - Use @ExceptionHandler
+- Use @ControllerAdvice

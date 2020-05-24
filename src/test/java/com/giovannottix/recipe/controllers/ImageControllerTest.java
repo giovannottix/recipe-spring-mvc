@@ -4,8 +4,8 @@ import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.services.ImageService;
 import com.giovannottix.recipe.services.RecipeService;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -30,16 +30,19 @@ public class ImageControllerTest {
     @Mock
     RecipeService recipeService;
 
-    ImageController controller;
+    ImageController imageController;
 
     MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        controller = new ImageController(imageService, recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        imageController = new ImageController(imageService, recipeService);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(imageController)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
     }
 
     @Test
@@ -101,5 +104,12 @@ public class ImageControllerTest {
 
         //then
         assertEquals(s.getBytes().length, reponseBytes.length);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testGetRecipeArgumentError() throws Exception {
+        mockMvc.perform(get("/recipe/qwerty/recipeimage"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
     }
 }
