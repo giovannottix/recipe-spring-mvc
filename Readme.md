@@ -19,3 +19,6 @@ I have learned so far with this project:
 - CRUD Operations
 - Thymeleaf and Enums
 - Working with images and Spring MVC
+- Create custom Exception 
+- Use @ResponseStatus
+- Use @ExceptionHandler

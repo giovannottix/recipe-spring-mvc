@@ -1,11 +1,8 @@
 package com.giovannottix.recipe.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.exceptions.NotFoundException;
 import com.giovannottix.recipe.services.RecipeService;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -19,9 +16,9 @@ import org.springframework.ui.Model;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsInstanceOf.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -32,9 +29,6 @@ public class RecipeControllerTest {
 
     @Mock
     RecipeService recipeService;
-
-    @Mock
-    Model model;
 
     RecipeController recipeController;
 
@@ -116,10 +110,12 @@ public class RecipeControllerTest {
     @Test
     public void testGetRecipeNotFound() throws Exception {
 
-        when(recipeService.getRecipesById(anyLong())).thenThrow(NotFoundException.class);
+        when(recipeService.getRecipesById(anyLong()))
+                .thenThrow(NotFoundException.class);
 
         mockMvc.perform(get("/recipe/1/show"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
     }
 
 }
