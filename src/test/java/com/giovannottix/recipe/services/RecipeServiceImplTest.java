@@ -4,6 +4,7 @@ import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.converters.RecipeCommandToRecipe;
 import com.giovannottix.recipe.converters.RecipeToRecipeCommand;
 import com.giovannottix.recipe.domain.Recipe;
+import com.giovannottix.recipe.exceptions.NotFoundException;
 import com.giovannottix.recipe.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -100,10 +101,7 @@ class RecipeServiceImplTest {
         when(recipeRepository.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
-        RecipeCommand recipe = recipeService.getRecipesById(ID);
-
-        assertNull(recipe);
-
+        assertThrows(NotFoundException.class, () -> recipeService.getRecipesById(ID));
         verify(recipeRepository, times(1)).findById(anyLong());
     }
 

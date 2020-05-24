@@ -2,6 +2,7 @@ package com.giovannottix.recipe.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giovannottix.recipe.commands.RecipeCommand;
+import com.giovannottix.recipe.exceptions.NotFoundException;
 import com.giovannottix.recipe.services.RecipeService;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -111,4 +112,14 @@ public class RecipeControllerTest {
         verify(recipeService, times(1))
                 .deleteRecipeById(anyLong());
     }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+
+        when(recipeService.getRecipesById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
+    }
+
 }
