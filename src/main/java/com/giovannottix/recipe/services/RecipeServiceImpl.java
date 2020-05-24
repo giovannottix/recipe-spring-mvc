@@ -4,12 +4,14 @@ import com.giovannottix.recipe.commands.RecipeCommand;
 import com.giovannottix.recipe.converters.RecipeCommandToRecipe;
 import com.giovannottix.recipe.converters.RecipeToRecipeCommand;
 import com.giovannottix.recipe.domain.Recipe;
+import com.giovannottix.recipe.exceptions.NotFoundException;
 import com.giovannottix.recipe.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -57,8 +59,15 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public RecipeCommand getRecipesById(Long id) {
-        return recipeToRecipeCommand
-                .convert(recipeRepository.findById(id).orElse(null));
+
+        Optional<Recipe> recipe = recipeRepository.findById(id);
+
+        if (!recipe.isPresent()) {
+            //throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found");
+        }
+
+        return recipeToRecipeCommand.convert(recipe.orElse(null));
     }
 
     @Override
