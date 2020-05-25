@@ -19,6 +19,10 @@ jobs:
 
     steps:
       - checkout
+      - run: mvn test
+      - store_artifacts:
+          path:  target
+
 
       # Download and cache dependencies
       - restore_cache:
@@ -35,7 +39,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run: mvn integration-test cobertura:cobertura
+      - run: mvn integration-test
 
       - store_test_results:
           path: target/surefire-reports
